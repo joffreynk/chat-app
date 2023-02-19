@@ -14,7 +14,9 @@ export const AuthProvider = ({ children }) =>{
     auth.onAuthStateChanged(user=>{
       setLoading(false)
       setUser(user)
-      if (user) navigate('/chats')
+      if (user===null){
+        navigate('/')
+      } else navigate('/chats')
     })
   }, [user, navigate])
 
