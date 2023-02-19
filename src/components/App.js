@@ -1,5 +1,4 @@
 import React from "react"
-
 import { Routes, Route } from "react-router-dom"
 
 import { AuthProvider } from "../contexts/AuthContext"
@@ -12,8 +11,8 @@ function App() {
     <div style={{ fontFamily: 'Avenir' }}>
       <AuthProvider>
           <Routes>
-            <Route path="/chats" component={Chats}/>
             <Route path="/" element = {<Login />} />
+            <Route path="/chats" element={<Chats />}/>
           </Routes>
       </AuthProvider>
     </div>
