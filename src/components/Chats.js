@@ -1,19 +1,21 @@
 import React from 'react'
 import { ChatEngine } from 'react-chat-engine'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
 
 import { auth } from '../firebase'
-import { userAuth } from '../contexts/AuthContext'
+import { UserAuth } from '../contexts/AuthContext'
 
 const Chats = () => {
+
+  const {user} = UserAuth()
+  console.log(user);
 
   const navigate = useNavigate()
   const handleLogout = async ()=>{
     await auth.signOut();
     navigate('/')
   }
-  
+
   return (
     <div className='chats-page'>
       <div className='nav-bar'>
