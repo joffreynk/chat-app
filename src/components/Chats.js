@@ -19,8 +19,12 @@ const Chats = () => {
         onClick={handleLogout}
         >Log out</div>
       </div>
-
-      
+      <ChatEngine
+			projectID='
+      687ead6c-4b6c-43b9-ab2d-8d63403e4e11'
+			userName='adam'
+			userSecret='pass1234'
+		/>
     </div>
   )
 }
