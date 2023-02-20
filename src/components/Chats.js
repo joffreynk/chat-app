@@ -8,6 +8,12 @@ import { userAuth } from '../contexts/AuthContext'
 
 const Chats = () => {
 
+  const navigate = useNavigate()
+  const handleLogout = async ()=>{
+    await auth.signOut();
+    navigate('/')
+  }
+  
   return (
     <div className='chats-page'>
       <div className='nav-bar'>
