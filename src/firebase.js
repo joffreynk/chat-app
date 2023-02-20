@@ -1,8 +1,8 @@
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-export const auth = firebase.initializeApp({
+export const auth = getAuth(initializeApp({
   apiKey: "AIzaSyA095eo0mNZEe-F631twvVberXd-l-VauM",
   authDomain: "chatroom579.firebaseapp.com",
   projectId: "chatroom579",
@@ -10,4 +10,4 @@ export const auth = firebase.initializeApp({
   messagingSenderId: "816559122174",
   appId: "1:816559122174:web:204fecc46ae0ca0af2e7af",
   measurementId: "G-JW4QD61BS9"
-}).auth();
+}));
