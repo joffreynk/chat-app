@@ -2,8 +2,8 @@ import React, {useEffect, useState, useContext, createContext} from "react";
 import { useNavigate } from 'react-router-dom';
 import { auth } from "../firebase";
 
-const AuthContext = React.createContext();
-export const userAuth = () => useContext(AuthContext);
+const AuthContext = createContext();
+export const UserAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) =>{
   const [loading, setLoading] = useState(true)
