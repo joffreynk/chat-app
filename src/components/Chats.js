@@ -1,9 +1,4 @@
 import React from 'react'
-
-const Chats = () => {
-  return (
-    <div>Chats</div>
-  )
-}
-
-export default Chats
+import { ChatEngine } from 'react-chat-engine'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
