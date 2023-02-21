@@ -1,26 +1,21 @@
 import React, {useEffect, useRef, useState} from 'react'
-import { Avatar, ChatEngine } from 'react-chat-engine'
+import { ChatEngine } from 'react-chat-engine'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 import { auth } from '../firebase'
 import { UserAuth } from '../contexts/AuthContext'
-import { type } from '@testing-library/user-event/dist/type'
 
 const Chats = () => {
   const user = UserAuth()
   const [loading, setLoading] = useState(true);
 
-  const url = "https://api.chatengine.io/users/"
-  const projectID = '687ead6c-4b6c-43b9-ab2d-8d63403e4e11'
-  const headers = {
-    "project-id": projectID,
-    "user-name ": user.email,
-    'user-secret': user.uid,
-  }
+  const url = "https://api.chatengine.io/users"
 
-  console.log(headers);
+  const projectID = '687ead6c-4b6c-43b9-ab2d-8d63403e4e11'
+
   const getFile = async(url) => {
-    const response = await fetch(url+'me')
+    const response = await fetch(url+'/me')
     const data = await response.blob();
     return new File([data], 'userphoto.jpg',{ type:'image/jpg'})
   }
@@ -37,31 +32,26 @@ const Chats = () => {
       navigate('/')
       return
     }
-    fetch(url, headers)
-    .then(()=>{
+
+    axios.get(url, {
+      "project-id": projectID,
+      "user-name ": user.email,
+      'user-secret': user.uid,
+    }).then(()=>{
       setLoading(false)
     }).catch(()=>{
-      let formData = new FormData();
-      formData.append('email', user.email);
-      formData.append('username', user.email);
-      formData.append('secret', user.uid);
-      getFile(user.photoURL)
-      .then(avatar=>{
-        formData.append('avatar', avatar)
-        fetch(url, {
-          method: 'POST',
-          headers: {
-            'private-key': '34594051-6a10-4e7d-b1e4-3158d8d483eb'
-          },
-          body: formData,
-        })
-        .then(()=>setLoading(false))
-        .catch(err=>console.log(err))
-      })
-    })
-  },[user, navigate])
+      let formdata = new FormData();
+      formdata.append('email', user.email);
+      formdata.append('username', user.email);
+      formdata.append('secret', user.uid);
+      getFile(user.photoURL).then((avatar)=>{
+        formdata.append('avatar', avatar, avatar.name)
 
-  if (!user || loading) return 'Loading...'
+        axios.post(url, formdata, { headers: {'private-key': '34594051-6a10-4e7d-b1e4-3158d8d483eb' }, }).then(()=>setLoading(false)).catch(err=>console.log(err)) })
+    })
+  },[user, navigate]);
+
+  if (!user || loading) return 'Loading...';
 
   return (
     <div className='chats-page'>
