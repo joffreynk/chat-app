@@ -18,7 +18,9 @@ export const AuthProvider = ({ children }) =>{
         navigate('/')
       } else navigate('/chats')
     })
+    
   }, [user, navigate])
+  console.log("FIREBASE",user);
 
   return (
     <AuthContext.Provider value={user} >
