@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react'
 import { ChatEngine } from 'react-chat-engine'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 
 import { auth } from '../firebase'
 import { UserAuth } from '../contexts/AuthContext'
@@ -17,7 +16,7 @@ const Chats = () => {
   const getFile = async(url) => {
     const response = await fetch(url+'/me')
     const data = await response.blob();
-    return new File([data], 'userphoto.jpg',{ type:'image/jpg'})
+    return new File([data], 'userphoto.jpg', { type:'image/jpg'})
   }
 
 
@@ -33,7 +32,7 @@ const Chats = () => {
       return
     }
 
-    axios.get(url, {
+    fetch(url, {
       "project-id": projectID,
       "user-name ": user.email,
       'user-secret': user.uid,
@@ -42,12 +41,12 @@ const Chats = () => {
     }).catch(()=>{
       let formdata = new FormData();
       formdata.append('email', user.email);
-      formdata.append('username', user.email);
+      formdata.append('username', user.displayName);
       formdata.append('secret', user.uid);
       getFile(user.photoURL).then((avatar)=>{
         formdata.append('avatar', avatar, avatar.name)
 
-        axios.post(url, formdata, { headers: {'private-key': '34594051-6a10-4e7d-b1e4-3158d8d483eb' }, }).then(()=>setLoading(false)).catch(err=>console.log(err)) })
+        fetch(url,  { body:formdata, method: 'post', headers: {'private-key': '34594051-6a10-4e7d-b1e4-3158d8d483eb' } }).then(()=>setLoading(false)).catch(err=>console.log(err)) })
     })
   },[user, navigate]);
 
@@ -65,7 +64,8 @@ const Chats = () => {
         >Log out</div>
       </div>
       <ChatEngine
-			projectID = {projectID}
+      height="calc(100vh - 66px)"
+			projectID = '687ead6c-4b6c-43b9-ab2d-8d63403e4e11'
 			userName={user.email}
 			userSecret={user.uid}
 		/>
