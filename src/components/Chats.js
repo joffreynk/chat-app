@@ -6,8 +6,18 @@ import { auth } from '../firebase'
 import { UserAuth } from '../contexts/AuthContext'
 
 const Chats = () => {
-
   const user = UserAuth()
+
+  const url = "https://api.chatengine.io/users/me/"
+  const projectID = '687ead6c-4b6c-43b9-ab2d-8d63403e4e11'
+  const headers = {
+    "project-id": projectID,
+    "user-name ": user.email,
+    'user-secret': user.uid,
+  }
+
+  console.log(headers);
+
 
   const navigate = useNavigate()
   const handleLogout = async ()=>{
@@ -15,7 +25,16 @@ const Chats = () => {
     navigate('/')
   }
 
-  
+  useEffect(() => {
+    if (!user) {
+      navigate('/')
+      return
+    }
+    fetch(url, headers)
+    .then(response=>{
+      
+    })
+  },[])
 
   return (
     <div className='chats-page'>
@@ -29,8 +48,7 @@ const Chats = () => {
         >Log out</div>
       </div>
       <ChatEngine
-			projectID='
-      687ead6c-4b6c-43b9-ab2d-8d63403e4e11'
+			projectID = {projectID}
 			userName='adam'
 			userSecret='pass1234'
 		/>

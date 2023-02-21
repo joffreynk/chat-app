@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) =>{
     })
     
   }, [user, navigate])
-  console.log("FIREBASE",user);
+  // console.log("FIREBASE",user);
 
   return (
     <AuthContext.Provider value={user} >
