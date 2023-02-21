@@ -41,7 +41,12 @@ const Chats = () => {
     .then(()=>{
       setLoading(false)
     }).catch(()=>{
-
+      let formData = new FormData();
+      formData.append('email', user.email);
+      formData.append('username', user.email);
+      formData.append('secret', user.uid);
+      getFile(user.photoURL)
+      .then(Avatar)
     })
   },[])
 
